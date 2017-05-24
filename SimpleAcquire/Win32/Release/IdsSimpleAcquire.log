@@ -1,0 +1,13 @@
+﻿生成启动时间为 2017/5/11 14:30:26。
+     1>项目“F:\work\ids_camera\SimpleAcquire\IdsSimpleAcquire.vcxproj”在节点 2 上(Build 个目标)。
+     1>InitializeBuildStatus:
+         正在对“Win32\Release\IdsSimpleAcquire.tlog\unsuccessfulbuild”执行 Touch 任务。
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"D:\Program Files\IDS\uEye\Develop\include" /Zi /nologo /W3 /WX- /O2 /Ob1 /Oy- /D WIN32 /D NDEBUG /D _WINDOWS /D _VC80_UPGRADE=0x0710 /D _UNICODE /D UNICODE /GF /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Win32\Release\IdsSimpleAcquire.pch" /Fo"Win32\Release\\" /Fd"Win32\Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt StdAfx.cpp
+         StdAfx.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\include\afxv_w32.h(40): fatal error C1189: #error :  MFC does not support WINVER less than 0x0501.  Please change the definition of WINVER in your project properties or precompiled header.
+     1>已完成生成项目“F:\work\ids_camera\SimpleAcquire\IdsSimpleAcquire.vcxproj”(Build 个目标)的操作 - 失败。
+
+生成失败。
+
+已用时间 00:00:00.40

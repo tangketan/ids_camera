@@ -6,9 +6,11 @@
 IDS_Cam::IDS_Cam()
 {
     m_hCam = 0;
+	m_binning_x = 2;
+	m_binning_y = 2;
 
-    img_width = 640*2;
-    img_height = 480*2;
+    img_width = 1600/m_binning_x;
+    img_height = 1200/m_binning_y;
     m_nRenderMode = IS_RENDER_FIT_TO_WINDOW;
 
     OpenCamera();		// open a camera handle
@@ -45,7 +47,6 @@ bool IDS_Cam::OpenCamera()
 
     int maxSizeX, maxSizeY;
     GetMaxImageSize(&maxSizeX, &maxSizeY);
-    printf("max size: %d %d\n", maxSizeX, maxSizeY);
 
     // setup the color depth to the current windows setting
     is_GetColorDepth(m_hCam, &m_nBitsPerPixel, &m_nColorMode);
@@ -57,7 +58,7 @@ bool IDS_Cam::OpenCamera()
     is_AllocImageMem(m_hCam, img_width, img_height, img_bpp, &m_ImageMemory, &m_lMemoryId);
     is_SetImageMem(m_hCam, m_ImageMemory, m_lMemoryId);	// set memory active
 
-    is_SetImageSize(m_hCam, img_width, img_height);
+    is_SetImageSize(m_hCam, img_width*m_binning_x, img_height*m_binning_y);
 
     // display initialization
     IS_SIZE_2D imageSize;
@@ -66,6 +67,11 @@ bool IDS_Cam::OpenCamera()
     //is_AOI(m_hCam, IS_AOI_IMAGE_SET_SIZE, (void*)&imageSize, sizeof(imageSize));
 
     is_SetDisplayMode(m_hCam, IS_SET_DM_DIB);
+
+	int binning = 0;
+	if (m_binning_x == 2) binning |= IS_BINNING_2X_HORIZONTAL;
+	if (m_binning_y == 2) binning |= IS_BINNING_2X_VERTICAL;
+	is_SetBinning(m_hCam, binning);
 
     return true;
 }
@@ -150,20 +156,21 @@ void IDS_Cam::SetAutoParam()
 {
     double enable = 1;
     double disable = 0;
-    is_SetAutoParameter(m_hCam, IS_SET_ENABLE_AUTO_GAIN, &enable, 0);
+    //is_SetAutoParameter(m_hCam, IS_SET_ENABLE_AUTO_GAIN, &enable, 0);
     is_SetAutoParameter(m_hCam, IS_SET_ENABLE_AUTO_WHITEBALANCE, &enable, 0);
     is_SetAutoParameter(m_hCam, IS_SET_ENABLE_AUTO_FRAMERATE, &disable, 0);
     is_SetAutoParameter(m_hCam, IS_SET_ENABLE_AUTO_SHUTTER, &enable, 0);
-    is_SetAutoParameter(m_hCam, IS_SET_ENABLE_AUTO_SENSOR_GAIN, &enable, 0);
+    //is_SetAutoParameter(m_hCam, IS_SET_ENABLE_AUTO_SENSOR_GAIN, &enable, 0);
     is_SetAutoParameter(m_hCam, IS_SET_ENABLE_AUTO_SENSOR_WHITEBALANCE, &enable, 0);
     is_SetAutoParameter(m_hCam, IS_SET_ENABLE_AUTO_SENSOR_SHUTTER, &disable, 0);
     
     double FPS, NEWFPS;
-    FPS = 15;
+    FPS = 30;
     is_SetFrameRate(m_hCam, FPS, &NEWFPS);
+	printf("actual frame rate: %.2f\n", NEWFPS);
 
 #if 0
-    double parameter = 10;// 50;
+    double parameter = 3;// 50;
     int error = is_Exposure(m_hCam, IS_EXPOSURE_CMD_SET_EXPOSURE, (void*)&parameter, sizeof(parameter));
     if (error != IS_SUCCESS) {
         printf("set exposure failed: %f\n", parameter);
@@ -171,6 +178,11 @@ void IDS_Cam::SetAutoParam()
     }
 
     error = is_Exposure(m_hCam, IS_EXPOSURE_CMD_GET_EXPOSURE, (void*)&parameter, sizeof(parameter));
+#else
+	double parameter = 5;// 50; // unit is ms
+	double newexp = 0;
+	int ret = is_SetExposureTime(m_hCam, parameter, &newexp);
+	printf("actual exposure time: %.2f\n", newexp);
 #endif
 
     UINT uiCaps = 0;

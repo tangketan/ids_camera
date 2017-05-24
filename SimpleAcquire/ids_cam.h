@@ -23,6 +23,8 @@ public:
 
     void PrintSensorInfo();
 
+	void SetBinning(int binning_num);
+
 private:
     HIDS    m_hCam;
     HWND	m_hWndDisplay;	// handle to diplay window
@@ -35,5 +37,7 @@ private:
     char*	m_ImageMemory;  // grabber memory - pointer to buffer
     INT     m_nRenderMode;  // render  mode
     SENSORINFO m_sInfo;	    // sensor information struct
+	int		m_binning_x;
+	int		m_binning_y;
 };
 

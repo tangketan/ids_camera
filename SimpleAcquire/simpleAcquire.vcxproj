@@ -33,12 +33,12 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="C:\Users\tangketan\Documents\Visual Studio 2013\use_opencv_debug_vs2013_x86.props" />
+    <Import Project="$(UserProfile)\Documents\Visual Studio 2013\use_opencv_debug_vs2013_x86.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\use_ids_cam.props" />
-    <Import Project="C:\Users\tangketan\Documents\Visual Studio 2013\use_opencv_release_vs2013_x86.props" />
+    <Import Project="$(UserProfile)\Documents\Visual Studio 2013\use_opencv_release_vs2013_x86.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
@@ -72,9 +72,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ids_cam.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\use_ids_cam.props" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
